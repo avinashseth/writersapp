@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomepageController@getHomepage')->name('get-homepage');
+
+Route::get('author/{author_name_slug}/{author_id}', 'AuthorController@getAllBlogsByAuthor')->name('get-all-blogs-by-author');
+
+Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
