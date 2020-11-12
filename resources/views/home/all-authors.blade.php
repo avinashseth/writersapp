@@ -48,6 +48,7 @@
 
     @endforeach
 
+    <div>{{ $users->links() }}</div>
 
     </div><!-- /.blog-main -->
 

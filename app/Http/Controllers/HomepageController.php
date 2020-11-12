@@ -15,7 +15,7 @@ class HomepageController extends Controller
 
     function getAllAuthors() {
 
-        $users = User::has('post')->with('post')->get();
+        $users = User::has('post')->with('post')->paginate(10);
         return view('home.all-authors', compact('users'));
 
     }

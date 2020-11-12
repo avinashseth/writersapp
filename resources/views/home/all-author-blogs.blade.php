@@ -42,7 +42,7 @@
         Blogs contributed by {{ $user->name }}
       </h3>
 
-    @foreach($user as $post) --}}
+    @foreach($user->post as $post)
 
           @include('partials.blog')
 

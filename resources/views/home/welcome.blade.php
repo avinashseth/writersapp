@@ -48,7 +48,7 @@
         From the Firehose
       </h3>
 
-      @include('partials.blog-post')
+      {{-- @include('partials.blog-post') --}}
 
     </div><!-- /.blog-main -->
 
