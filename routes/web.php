@@ -26,3 +26,6 @@ Route::post('comment/{post_id}', 'CommentController@postNewComment')->name('post
 Route::get('login', function() {
     echo "to create login function";
 });
+
+Route::get('add-new-blog', 'BlogPostController@getAddNewBlog')->name('get-add-new-blog');
+Route::post('add-new-blog', 'BlogPostController@postAddNewBlog')->name('post-add-new-blog');

@@ -22,4 +22,10 @@ class Post extends Model
         return $this->hasMany(Comment::class);
 
     }
+    
+    function setPostSlugAttribute($string) {
+
+        $this->attributes['post_slug'] = \Str::slug($string);
+
+    }
 }
