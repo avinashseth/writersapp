@@ -22,3 +22,7 @@ Route::get('blog/{blog_slug}/{blog_id}', 'BlogPostController@getReadBlogByAuthor
 Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
 
 Route::post('comment/{post_id}', 'CommentController@postNewComment')->name('post-comment');
+
+Route::get('login', function() {
+    echo "to create login function";
+});
