@@ -61,19 +61,23 @@
             @if(Session::has('comment_feedback'))
                 <div class="{{ Session::get('comment_feedback_class') }}">{{ Session::get('comment_feedback') }}</div>
             @endif
-            <form action="{{ route('post-comment', ['post_id'=>$post->id]) }}" method="post">
-                @csrf
-                <div class="form-group">
-                    <label class="form-label">Share your thoughts</label>
-                    <textarea name="comment" class="form-control"></textarea>
-                </div>
-                @error('comment')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn btn-primary" />
-                </div>
-            </form>
+            @auth
+                <form action="{{ route('post-comment', ['post_id'=>$post->id]) }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-label">Share your thoughts</label>
+                        <textarea name="comment" class="form-control"></textarea>
+                    </div>
+                    @error('comment')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="form-group">
+                        <input type="submit" value="Post Comment" class="btn btn-primary" />
+                    </div>
+                </form>
+            @else
+                <div class="alert alert-danger"><a href="/login">Please Login to Add Comment</a></div>
+            @endauth
         </div>
   </div>
 

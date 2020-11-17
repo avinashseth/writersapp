@@ -23,9 +23,9 @@ Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
 
 Route::post('comment/{post_id}', 'CommentController@postNewComment')->name('post-comment');
 
-Route::get('login', function() {
-    echo "to create login function";
-});
-
 Route::get('add-new-blog', 'BlogPostController@getAddNewBlog')->name('get-add-new-blog');
 Route::post('add-new-blog', 'BlogPostController@postAddNewBlog')->name('post-add-new-blog');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

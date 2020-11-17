@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Auth;
 
 class BlogPostController extends Controller
 {
+
+    function __construct() {
+
+        $this->middleware('auth');
+
+    }
+
     function getReadBlogByAuthor(Request $request) {
 
         $post = Post::where('id', $request->blog_id)->with('comments')->first();
@@ -32,7 +40,7 @@ class BlogPostController extends Controller
         $post->post_body = $request->blog_body;
         $post->post_heading = $request->blog_heading;
         $post->post_slug = $request->blog_heading;
-        $post->user_id = rand(1,100); // it will be Auth::user()->id
+        $post->user_id = Auth::user()->id;
         $post->save();
 
         $request->session()->flash('blog_feedback', 'Blog added successfully!');
