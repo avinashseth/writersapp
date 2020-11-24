@@ -29,6 +29,9 @@ class BlogPostController extends Controller
             $request->session()->flash('blog_feedback_class', 'alert alert-danger');
             return redirect('/home');
         }
+
+        Post::where('id', $request->blog_id)
+            ->delete();
         $request->session()->flash('blog_feedback_message', 'Blog Deleted Successfully!');
         $request->session()->flash('blog_feedback_class', 'alert alert-success');
         return redirect('/home');
@@ -78,5 +81,47 @@ class BlogPostController extends Controller
 
         return redirect()->back();
 
+    }
+
+    function getEditBlog(Request $request) {
+
+        if(is_null($request->blog_id) || !is_numeric($request->blog_id)) {
+
+            $request->session()->flash('blog_feedback_message', 'Invalid Blog Id, please try again!');
+            $request->session()->flash('blog_feedback_class', 'alert alert-danger');
+            return redirect('/home');
+
+        }
+        if(is_null($request->blog_slug)) {
+            $request->session()->flash('blog_feedback_message', 'Invalid Blog Slug, please try again!');
+            $request->session()->flash('blog_feedback_class', 'alert alert-danger');
+            return redirect('/home');
+        }
+
+        $post = Post::where('id', $request->blog_id)->first();
+
+        return view('home.edit-blog', compact('post'));
+
+    }
+
+    function postEditBlog(Request $request) {
+
+        $blogData = $request->validate([
+            'blog_heading'  => 'required|max:300|min:10',
+            'blog_body' => 'required|min:10|max:5000',
+        ]);
+
+        Post::where('id', $request->blog_id)
+            ->update(
+                [
+                    'post_heading'=>$request->blog_heading,
+                    'post_body'=>$request->blog_body,
+                ]
+            );
+
+        $request->session()->flash('blog_feedback', 'Blog Updated successfully!');
+        $request->session()->flash('blog_feedback_class', 'alert alert-success');
+
+        return redirect()->route('get-edit-blog',['blog_id'=>$request->blog_id, 'blog_slug'=>$request->blog_slug]);
     }
 }

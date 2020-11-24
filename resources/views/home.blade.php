@@ -35,7 +35,7 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="{{ route('get-edit-blog', ['blog_id'=>$post->id, 'blog_slug'=>$post->post_slug]) }}">Edit</a>
                                                 <a class="dropdown-item" href="{{ route('get-blog-delete', ['blog_id'=>$post->id, 'blog_slug'=>$post->post_slug]) }}">Delete</a>
                                             </div>
                                         </div>
@@ -44,6 +44,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div>{{ $posts->links() }}</div>
                     @else
                         <a href="{{ route('get-add-new-blog') }}" class="btn btn-primary">Create Your First Post</a>
                     @endif

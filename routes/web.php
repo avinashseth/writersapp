@@ -38,8 +38,8 @@ Route::prefix('search')->group(function() {
 
 
 Route::prefix('blog')->group(function() {
-    Route::get('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@getEditBlog');
-    Route::post('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@postEditBlog');
+    Route::get('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@getEditBlog')->name('get-edit-blog');
+    Route::post('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@postEditBlog')->name('post-edit-blog');
     Route::get('delete-blog/{blog_slug}/{blog_id}', 'BlogPostController@getBlogDelete')->name('get-blog-delete');
     Route::get('{blog_slug}/{blog_id}', 'BlogPostController@getReadBlogByAuthor')->name('get-read-blog-by-author');
 });
