@@ -17,7 +17,6 @@ Route::get('/', 'HomepageController@getHomepage')->name('get-homepage');
 
 Route::get('author/{author_name_slug}/{author_id}', 'AuthorController@getAllBlogsByAuthor')->name('get-all-blogs-by-author');
 
-Route::get('blog/{blog_slug}/{blog_id}', 'BlogPostController@getReadBlogByAuthor')->name('get-read-blog-by-author');
 
 Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
 
@@ -32,3 +31,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('login/google','Auth\LoginController@redirectToProvider')->name('get-login-with-google');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::prefix('search')->group(function() {
+    Route::view('blog', 'search.blog');
+});
+
+
+Route::prefix('blog')->group(function() {
+    Route::get('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@getEditBlog');
+    Route::post('edit-blog/{blog_slug}/{blog_id}', 'BlogPostController@postEditBlog');
+    Route::get('delete-blog/{blog_slug}/{blog_id}', 'BlogPostController@getBlogDelete')->name('get-blog-delete');
+    Route::get('{blog_slug}/{blog_id}', 'BlogPostController@getReadBlogByAuthor')->name('get-read-blog-by-author');
+});

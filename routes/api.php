@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('search')->group(function() {
+
+    Route::post('blog','SearchController@getBlogs')->name('post-search-blog');
+
+});
+
+Route::prefix('blog')->group(function() {
+    Route::post('comment','CommentController@postCommentOnBlog');
+});

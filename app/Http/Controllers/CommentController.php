@@ -26,4 +26,15 @@ class CommentController extends Controller
         return redirect()->back();
 
     }
+
+    function postCommentOnBlog(Request $request) {
+
+        $comment = new Comment;
+        $comment->post_id = $request->post_id;
+        $comment->user_id = Auth::user()->id; // future it will Auth::user()->id
+        $comment->comment = $request->comment;
+        $comment->save();
+        return response()->json(['status'=>true,'message'=>'Comment posted successfully']);
+        
+    }
 }
