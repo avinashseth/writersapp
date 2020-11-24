@@ -20,6 +20,8 @@ Route::get('author/{author_name_slug}/{author_id}', 'AuthorController@getAllBlog
 
 Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
 
+Route::get('follow/{author_id}', 'HomeController@getFollowAuthor')->name('get-follow-author');
+
 Route::post('comment/{post_id}', 'CommentController@postNewComment')->name('post-comment');
 
 Route::get('add-new-blog', 'BlogPostController@getAddNewBlog')->name('get-add-new-blog');

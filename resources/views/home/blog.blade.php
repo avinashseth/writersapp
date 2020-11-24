@@ -39,6 +39,10 @@
   <div class="row">
     <div class="col-md-8 blog-main">
 
+    @if(Session::has('follow_feedback'))
+        <div class="{{ Session::get('follow_feedback_class') }}">{{ Session::get('follow_feedback') }}</div>
+    @endif
+
       @include('partials.blog-post')
 
     </div><!-- /.blog-main -->
