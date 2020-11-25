@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Auth;
+use App\Follower;
 
 class BlogPostController extends Controller
 {
@@ -52,7 +53,17 @@ class BlogPostController extends Controller
 
         $post = Post::where('id', $request->blog_id)->with('comments')->first();
 
-        return view('home.blog', compact('post'));
+        // find if current logged in user is following the author or not
+
+        $following = 0;
+
+        if(Auth::user()) {
+
+            $following = Follower::where(['author_id'=>$post->user_id, 'follower_id'=>Auth::user()->id])->count();
+
+        }
+
+        return view('home.blog', compact('post','following'));
 
     }
 

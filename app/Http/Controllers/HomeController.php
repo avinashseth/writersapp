@@ -35,15 +35,55 @@ class HomeController extends Controller
         
         if($follow == 0) {
 
-            Follower::insert(['author_id'=>$request->author_id, 'follower_id'=>Auth::user()->id]);
+            $follower = new Follower();
+            $follower->author_id = $request->author_id;
+            $follower->follower_id = Auth::user()->id;
+            $follower->save();
+
             $request->session()->flash('follow_feedback', 'You are now following!');
             $request->session()->flash('follow_feedback_class', 'alert alert-success');
+            
             return redirect()->back();
 
         } else {
 
             $request->session()->flash('follow_feedback', 'You are already following!');
+            $request->session()->flash('follow_feedback_class', 'alert alert-danger');
+            return redirect()->back();
+
+        }
+
+    }
+
+    function getUnfollowAuthor(Request $request) {
+
+        if(is_null($request->author_id) || !is_numeric($request->author_id)) {
+
+            $request->session()->flash('follow_feedback', 'Invalid Author ID!');
+            $request->session()->flash('follow_feedback_class', 'alert alert-danger');
+
+            return redirect()->back();
+
+        }
+
+        $isFollower = Follower::where(['author_id'=>$request->author_id,'follower_id'=>Auth::user()->id])
+            ->count();
+
+        if($isFollower == 1) {
+
+            Follower::where(['author_id'=>$request->author_id,'follower_id'=>Auth::user()->id])
+                ->delete();
+            
+            $request->session()->flash('follow_feedback', 'You are not longer following author');
             $request->session()->flash('follow_feedback_class', 'alert alert-info');
+
+            return redirect()->back();
+
+        } else {
+
+            $request->session()->flash('follow_feedback', 'Invalid Request, please try again!');
+            $request->session()->flash('follow_feedback_class', 'alert alert-danger');
+
             return redirect()->back();
 
         }

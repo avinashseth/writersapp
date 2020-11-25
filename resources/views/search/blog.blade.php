@@ -31,17 +31,32 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <script>
-        $('#verfiy').click(function() {
-            $.ajax({
-                method: "post",
-                url: '{{ route('post-search-blog') }}',
-                data: {"query": $('#blogname').val()},
-                dataType: "json",
-                success: function(data) {
-                    
-                }
-            });
+        var blogName = $('#blogname');
+        blogName.keyup(function() {
+            if(blogName.val().length > 3) {
+                var resultFeedback = '<ul>';
+                $.ajax({
+                    method: "post",
+                    url: '{{ route('post-search-blog') }}',
+                    data: {"query": $('#blogname').val()},
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.length > 0) {
+                            $.each(data, function( index, value ) {
+                                resultFeedback += '<li><a href="' + value.link + '">' + value.title + '</a></li>';
+                            });
+                            resultFeedback += '</ul>';
+                            $('#feedback').html(resultFeedback);
+                        } else {
+                            $('#feedback').html('No results found for query <strong>' + blogName.val() + '</strong>');
+                        }
+                    }
+                });
+            } else {
+                $('#feedback').html('');
+            }
         });
+        
     </script>
 </body>
 </html>

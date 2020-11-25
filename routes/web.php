@@ -19,8 +19,10 @@ Route::get('author/{author_name_slug}/{author_id}', 'AuthorController@getAllBlog
 
 
 Route::get('authors', 'HomepageController@getAllAuthors')->name('get-authors');
+Route::get('blogs', 'HomepageController@getAllBlogs')->name('get-blogs');
 
 Route::get('follow/{author_id}', 'HomeController@getFollowAuthor')->name('get-follow-author');
+Route::get('unfollow/{author_id}', 'HomeController@getUnfollowAuthor')->name('get-unfollow-author');
 
 Route::post('comment/{post_id}', 'CommentController@postNewComment')->name('post-comment');
 
