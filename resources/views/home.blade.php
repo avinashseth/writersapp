@@ -6,8 +6,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Posts Contributed By You</div>
-
                 <div class="card-body">
+                    <a href="{{ route('get-add-new-blog') }}" class="btn btn-primary">Add a new Blog</a>
                     @if(Session::has('blog_feedback_message'))
                         <div class="{{ Session::get('blog_feedback_class') }}">{{ Session::get('blog_feedback_message') }}</div>
                     @endif

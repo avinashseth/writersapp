@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Follower extends Model
 {
     //
+    public function user() {
+
+        return $this->belongsTo(User::class, 'follower_id', 'id');
+
+    }
 }

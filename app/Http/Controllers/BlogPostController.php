@@ -7,6 +7,10 @@ use App\Post;
 use Auth;
 use App\Follower;
 
+
+use App\Mail\NewPostByAuthorMail;
+use Illuminate\Support\Facades\Mail;
+
 class BlogPostController extends Controller
 {
 
@@ -89,6 +93,29 @@ class BlogPostController extends Controller
 
         $request->session()->flash('blog_feedback', 'Blog added successfully!');
         $request->session()->flash('blog_feedback_class', 'alert alert-success');
+
+        // fetch the followers
+
+        $followers = Follower::where('author_id', Auth::user()->id)
+            ->get();
+        
+        if($followers->count() > 0) {
+
+            foreach($followers as $follower) {
+
+                // generate the data
+                $emailData = array(
+                    'follower_name' => $follower->user->name,
+                    'author_name' => Auth::user()->name,
+                    'blog_link' => route('get-read-blog-by-author',['blog_slug' => \Str::slug($request->blog_heading),'blog_id'=>$post->id]),
+                    'blog_title' => $request->blog_heading,
+                );
+
+                Mail::to($follower->user->email)->send(new NewPostByAuthorMail($emailData));
+
+            }
+
+        }
 
         return redirect()->back();
 

@@ -19,6 +19,23 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    function getFollowersDetails() {
+
+        $followers = Follower::where('author_id', Auth::user()->id)
+            ->get();
+        
+        if($followers->count() > 0) {
+
+            foreach($followers as $follower) {
+
+                echo $follower->user->name . '<br />';
+
+            }
+
+        }
+
+    }
+
     function getFollowAuthor(Request $request) {
 
         if(is_null($request->author_id) || !is_numeric($request->author_id)) {

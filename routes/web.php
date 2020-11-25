@@ -33,6 +33,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('general', 'HomeController@getFollowersDetails');
+
 Route::get('login/google','Auth\LoginController@redirectToProvider')->name('get-login-with-google');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 
